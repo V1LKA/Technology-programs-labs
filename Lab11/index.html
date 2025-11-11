@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторная 11 — React без установки</title>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+<script type="text/javascript">
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+
+    function App() {
+        const [students, setStudents] = React.useState([]);
+
+        function addStudent() {
+            const name = prompt("Введите имя студента:");
+            if (name) setStudents([...students, name]);
+        }
+
+        function removeStudent(index) {
+            setStudents(students.filter((_, i) => i !== index));
+        }
+
+        return React.createElement("div", null,
+            React.createElement("h2", null, "Список студентов"),
+            React.createElement("button", { onClick: addStudent }, "Добавить"),
+            React.createElement("ul", null,
+                students.map((name, i) =>
+                    React.createElement("li", { key: i },
+                        name,
+                        React.createElement("button", { onClick: () => removeStudent(i) }, "Удалить")
+                    )
+                )
+            )
+        );
+    }
+
+    root.render(React.createElement(App));
+</script>
+
+</body>
+</html>
